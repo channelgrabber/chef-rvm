@@ -2,7 +2,7 @@ class Chef
   module RVM
     module UserEnvironmentPathHelpers
 
-      def configure_ruby_env_paths(user_dir)
+      def configure_ruby_env_paths(user_dir) # TODO remove this file
         user_profile_filename = node['rvm']['user_env']['profile_filename']
         user_profile = File.join(user_dir, user_profile_filename)
         file user_profile do
