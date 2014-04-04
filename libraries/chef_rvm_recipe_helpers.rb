@@ -91,6 +91,7 @@ class Chef
           log "Performing RVM install with [#{install_command}] (as #{install_user})"
           i.run_action(:run)
         end
+        configure_ruby_env_paths(user_dir)
       end
 
       def upgrade_rvm(opts = {})
@@ -127,6 +128,7 @@ class Chef
           not_if   { opts[:upgrade_strategy] == "none" }
         end
         u.run_action(:run) if install_now
+        configure_ruby_env_paths(user_dir)
       end
 
       def rvmrc_template(opts = {})
