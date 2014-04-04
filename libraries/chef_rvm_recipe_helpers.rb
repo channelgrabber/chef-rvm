@@ -147,9 +147,9 @@ class Chef
               bin = File.join(user_dir, path)
               Chef::Log.error bin.inspect
               fe.insert_line_if_no_match(/#{bin}/, "export PATH=#{bin}:$PATH")
+              fe.write_file
             end
             Chef::Log.error "----------------------------------------------"
-            fe.write_file
           end
         end
         execute "Source #{user_profile}" do
