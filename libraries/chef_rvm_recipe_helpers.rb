@@ -142,13 +142,13 @@ class Chef
           block do
             fe = Chef::Util::FileEdit.new(user_profile)
 
-            Chef::Log.log "--- BIN PATHS --------------------------------"
+            Chef::Log.error "--- BIN PATHS --------------------------------"
             node['rvm']['user_env']['paths'].each do |path|
               bin = File.join(user_dir, path)
-              Chef::Log.log bin.inspect
+              Chef::Log.error bin.inspect
               fe.insert_line_if_no_match(/#{bin}/, "export PATH=#{bin}:$PATH")
             end
-            Chef::Log.log "----------------------------------------------"
+            Chef::Log.error "----------------------------------------------"
             fe.write_file
           end
         end
