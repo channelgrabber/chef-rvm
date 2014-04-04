@@ -152,10 +152,6 @@ class Chef
             Chef::Log.error "----------------------------------------------"
           end
         end
-        execute "Source #{user_profile}" do
-          user    user
-          command "source #{user_profile}"
-        end
       end
 
       def rvmrc_template(opts = {})
