@@ -91,7 +91,7 @@ class Chef
           log "Performing RVM install with [#{install_command}] (as #{install_user})"
           i.run_action(:run)
         end
-        configure_ruby_env_paths(user_dir)
+        configure_ruby_env_paths(opts[:user], user_dir)
       end
 
       def upgrade_rvm(opts = {})
@@ -128,10 +128,10 @@ class Chef
           not_if   { opts[:upgrade_strategy] == "none" }
         end
         u.run_action(:run) if install_now
-        configure_ruby_env_paths(user_dir)
+        configure_ruby_env_paths(opts[:user], user_dir)
       end
 
-      def configure_ruby_env_paths(user_dir)
+      def configure_ruby_env_paths(user, user_dir)
         user_profile_filename = node['rvm']['user_env']['profile_filename']
         user_profile = File.join(user_dir, user_profile_filename)
         file user_profile do
@@ -148,6 +148,10 @@ class Chef
             end
             fe.write_file
           end
+        end
+        execute "Source #{user_profile}" do
+          user    user
+          command "source #{user_profile}"
         end
       end
 
